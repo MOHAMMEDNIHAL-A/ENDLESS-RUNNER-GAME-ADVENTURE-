@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Super Mario — Browser</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div id="screen-landing" class="screen screen-landing">
+      <div class="landing-inner">
+        <p class="landing-kicker">Browser platformer</p>
+        <h1 class="landing-title">Super Mario</h1>
+        <p class="landing-sub muted">Jump on foes, grab coins, clear all three levels.</p>
+        <nav class="landing-actions" aria-label="Main menu">
+          <button type="button" class="menu-btn menu-btn-primary" id="btnPlay">Play</button>
+          <button type="button" class="menu-btn" id="btnMaps">Map selection</button>
+          <button type="button" class="menu-btn" id="btnAvatars">Change avatar</button>
+        </nav>
+        <p class="landing-hint muted small" id="landingSelectionHint"></p>
+      </div>
+    </div>
+
+    <div id="screen-map" class="screen screen-sub" hidden>
+      <div class="sub-inner sub-inner-wide">
+        <button type="button" class="back-link ghost" id="btnMapBack">← Back</button>
+        <h2 class="sub-title">Choose a map</h2>
+        <p class="muted small sub-lead">
+          Pick the <strong>first</strong> stage of your run. A full game is <strong>3 levels in a row</strong> (this map, then the next two in rotation).
+        </p>
+        <div class="pick-grid map-pick-grid" id="mapPickGrid"></div>
+      </div>
+    </div>
+
+    <div id="screen-avatar" class="screen screen-sub" hidden>
+      <div class="sub-inner avatar-screen-inner">
+        <button type="button" class="back-link ghost" id="btnAvatarBack">← Back</button>
+        <h2 class="sub-title">Choose your hero</h2>
+        <p class="muted small sub-lead">Large preview — cap, overalls, and mustache.</p>
+        <div class="avatar-showcase-wrap">
+          <canvas id="avatarShowcase" width="220" height="286" aria-hidden="true"></canvas>
+          <p class="avatar-showcase-caption muted small" id="avatarShowcaseCaption"></p>
+        </div>
+        <div class="pick-grid avatar-grid" id="avatarPickGrid"></div>
+      </div>
+    </div>
+
+    <div id="screen-game" class="screen screen-game" hidden>
+      <div class="app">
+        <header class="top">
+          <div class="brand">
+            <span class="logo">Super Mario</span>
+            <span class="tag" id="gameMapLabel">Map</span>
+          </div>
+          <div class="hud-wrap">
+          <div class="hud" id="hud">
+            <span class="hud-field">
+              <span class="hud-label">Level</span>
+              <strong id="hudLevel">1 / 3</strong>
+            </span>
+            <span class="hud-field">
+              <span class="hud-label">Score</span>
+              <strong id="score">0</strong>
+            </span>
+            <span class="hud-field">
+              <span class="hud-label">Coins</span>
+              <strong id="coins">0</strong>
+            </span>
+            <span class="hud-field hud-field--hearts">
+              <span class="hud-label">Lives</span>
+              <span class="hearts" id="livesHearts" role="img" aria-label="Lives"></span>
+            </span>
+          </div>
+          </div>
+          <button type="button" class="btn-top-menu ghost" id="btnTopMenu">Menu</button>
+        </header>
+
+        <main class="stage stage--plains" id="gameStage">
+          <div class="stage-sky" aria-hidden="true"></div>
+          <div class="stage-playfield">
+          <canvas id="game" width="1280" height="720" aria-label="Game canvas"></canvas>
+          <div class="hurt-popup" id="hurtPopup" hidden>
+            <div class="hurt-popup__card">
+              <svg class="hurt-popup__heart hurt-popup__heart--anim" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                />
+              </svg>
+              <p class="hurt-popup__text">Life lost</p>
+            </div>
+          </div>
+          <div class="overlay" id="overlay" hidden>
+            <div class="card">
+              <h2 id="overlayTitle">Paused</h2>
+              <p id="overlayText" class="muted"></p>
+              <div class="row row-wrap">
+                <button type="button" id="btnPrimary">Continue</button>
+                <button type="button" id="btnSecondary" class="ghost">Leaderboard</button>
+                <button type="button" id="btnMenu" class="ghost" hidden>Main menu</button>
+              </div>
+            </div>
+          </div>
+          </div>
+        </main>
+
+        <aside class="side">
+          <section class="side-panel">
+            <h3>Controls</h3>
+            <p class="muted small">
+              Move: <kbd>A</kbd> <kbd>D</kbd> or arrows · Jump: <kbd>W</kbd> <kbd>Space</kbd> <kbd>↑</kbd> · Pause:
+              <kbd>P</kbd> <kbd>Esc</kbd>
+            </p>
+          </section>
+          <section class="side-panel">
+            <h3>Leaderboard</h3>
+            <ol id="leaderboard" class="lb"></ol>
+            <p id="lbError" class="muted small" hidden>Could not load scores (is the server running?).</p>
+          </section>
+        </aside>
+      </div>
+    </div>
+
+    <script src="/js/game.js" type="module"></script>
+  </body>
+</html>
